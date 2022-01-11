@@ -1,7 +1,7 @@
-import {VercelRequest, VercelResponse} from '@vercel/node';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
-import {RequestBody as IncomingLinearWebhookPayload} from '../v1-util/_types';
-import {error, exec, sendComment, sendIssue} from '../v1-util/_util';
+import { RequestBody as IncomingLinearWebhookPayload } from '../../v1-util/_types';
+import { error, exec, sendComment, sendIssue } from '../../v1-util/_util';
 
 export default async function handler(
 	req: VercelRequest,
@@ -14,7 +14,7 @@ export default async function handler(
 		});
 	}
 
-	const {id, token} = req.query as {
+	const { id, token } = req.query as {
 		id: string;
 		token: string;
 	};
@@ -50,8 +50,8 @@ export default async function handler(
 	}
 
 	const options = [
-		{action: body.action, url: body.url},
-		{id, token},
+		{ action: body.action, url: body.url },
+		{ id, token },
 	] as const;
 
 	try {
@@ -79,9 +79,8 @@ export default async function handler(
 
 		return void res.status(500).json({
 			success: false,
-			message: `Something went wrong: ${
-				e instanceof Error ? e.message : 'unknown errors'
-			}`,
+			message: `Something went wrong: ${e instanceof Error ? e.message : 'unknown errors'
+				}`,
 		});
 	}
 }

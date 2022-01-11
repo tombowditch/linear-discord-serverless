@@ -1,12 +1,12 @@
-import {LinearClient} from '@linear/sdk';
-import {MessageEmbed} from 'discord.js';
-import {HttpException} from 'nextkit';
-import {z} from 'zod';
-import {bodySchema} from '../v2-util/schema';
+import { LinearClient } from '@linear/sdk';
+import { MessageEmbed } from 'discord.js';
+import { HttpException } from 'nextkit';
+import { z } from 'zod';
+import { bodySchema } from '../../v2-util/schema';
 import fetch from 'node-fetch';
-import {Label} from '../v1-util/_types';
-import {api} from '../v2-util/api';
-import {getId} from '../v2-util/util';
+import { Label } from '../../v1-util/_types';
+import { api } from '../../v2-util/api';
+import { getId } from '../../v2-util/util';
 
 const querySchema = z.object({
 	api: z.string(),
@@ -29,7 +29,7 @@ export default api({
 	async POST(req) {
 		// Linear's trusted ip range, this comes from
 		// https://developers.linear.app/docs/graphql/webhooks#how-does-a-webhook-work
-		const {success} = z
+		const { success } = z
 			.enum(['35.231.147.226', '35.243.134.228'])
 			.safeParse(req.headers['x-vercel-forwarded-for']);
 
@@ -45,7 +45,7 @@ export default api({
 
 		const client = new LinearClient({
 			apiKey: api,
-			headers: {'User-Agent': 'github.com/alii/linear-discord-serverless'},
+			headers: { 'User-Agent': 'github.com/alii/linear-discord-serverless' },
 		});
 
 		// const body = bodySchema.parse(req.body);
@@ -133,7 +133,7 @@ export default api({
 
 				const completed =
 					cycle.completedIssueCountHistory[
-						cycle.completedIssueCountHistory.length - 1
+					cycle.completedIssueCountHistory.length - 1
 					];
 
 				embed
@@ -170,7 +170,7 @@ export default api({
 
 		await fetch(webhook, {
 			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
 				embeds: [embed.toJSON()],
 				avatar_url: avatar,
